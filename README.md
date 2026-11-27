@@ -26,6 +26,88 @@ This commands includes
 • Other IP Commands e.g. show ip route etc.
 <BR>
 
+
+##program:
+
+```
+
+import socket
+import subprocess
+import re
+
+s = socket.socket()
+s.bind(('localhost', 8000))
+s.listen(5)
+
+print("Server is waiting for connection...")
+
+c, addr = s.accept()
+print("Connected to:", addr)
+
+while True:
+    hostname = c.recv(1024).decode()
+
+    if not hostname:
+        break
+
+    if hostname.lower() == "exit":
+        break
+
+    result = subprocess.run(
+        ["ping", "-n", "4", hostname],
+        capture_output=True,
+        text=True
+    )
+
+    match = re.search(
+        r"Minimum\s*=\s*(\d+)ms.*Maximum\s*=\s*(\d+)ms.*Average\s*=\s*(\d+)ms",
+        result.stdout
+    )
+
+    if match:
+        min_time, max_time, avg_time = match.groups()
+        response = (
+            f"Minimum: {min_time} ms\n"
+            f"Average: {avg_time} ms\n"
+            f"Maximum: {max_time} ms"
+        )
+    else:
+        response = "Host Not Found or Ping Failed"
+
+    c.send(response.encode())
+
+c.close()
+s.close()
+
+```
+
+client:
+
+```
+import socket
+
+s = socket.socket()
+s.connect(('localhost', 8000))
+
+while True:
+    ip = input("Enter the website you want to ping: ")
+
+    if ip.lower() == 'exit':
+        break
+
+    s.send(ip.encode())
+
+    result = s.recv(4096).decode()
+    print("\nPing Statistics:")
+    print(result)
+
+s.close()
+
+```
+
+
+
+
 ## Output
 
 
