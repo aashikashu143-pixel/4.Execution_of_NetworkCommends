@@ -28,5 +28,22 @@ This commands includes
 
 ## Output
 
+
+
+server:
+
+
+<img width="636" height="380" alt="Screenshot 2026-11-27 091446" src="https://github.com/user-attachments/assets/fe6f8090-6b08-48ff-ab5e-fa7fb9bc079b" />
+
+
+client:
+
+<img width="666" height="487" alt="Screenshot 2026-11-27 091454" src="https://github.com/user-attachments/assets/3aa13703-6fbb-41c2-bde8-21c7ed5315d6" />
+
+
+
+
+
+
 ## Result
 Thus Execution of Network commands Performed 
